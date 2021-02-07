@@ -17,14 +17,18 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+       
+        public void Add(Car cars)
         {
-            _carDal.Add(car);
-        }
-
-        public void Delete(Car car)
-        {
-            _carDal.Delete(car);
+            if (cars.DailyPrice > 0 && cars.Description.Length >= 2)
+            {
+                _carDal.Add(cars);
+                Console.WriteLine("Ürününüz başarıyla eklendi.");
+            }
+            else
+            {
+                Console.WriteLine("Eklediğiniz ürün şartlara uymamaktadır.");
+            }
         }
 
         public List<Car> GetAll()
@@ -32,19 +36,17 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public List<Car> GetById(int id)
+        public List<Car> GetCarsByBrandId(int id)
         {
-            return _carDal.GetById(id);
+            Console.WriteLine("Ürünler Marka Id'sine göre sıralandı.");
+            return _carDal.GetAll(p=>p.BrandId==id);
         }
 
-        public void Update(Car car)
+        public List<Car> GetCarsByColorId(int id)
         {
-            _carDal.Update(car);
+            Console.WriteLine("Ürünler Renk Id'sine göre sıralandı.");
+            return _carDal.GetAll(p => p.ColorId == id);
         }
 
-        Car ICarService.GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
