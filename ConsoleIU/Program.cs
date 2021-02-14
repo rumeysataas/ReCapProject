@@ -10,9 +10,38 @@ namespace ConsoleIU
     {
         static void Main(string[] args)
         {
-            CarAllMethod();
+            //CarAllMethod();
             //ColorAllMethod();
             //BrandAllMethod();
+
+            //CustomerAddMethod();
+
+            RentalManager rental = new RentalManager(new EfRentalDal());
+            rental.Add(new Rental { CarId = 3, CustomerId=3,RentDate=DateTime.Today });
+           // rental.Add(new Rental { ReturnDate = DateTime.Today });
+
+            //foreach (var cust in rental.GetRentalDetails().Data)
+            //{
+            //    Console.WriteLine(cust.CarName + " " + cust.FirstName + " " + cust.LastName + " " + cust.RentDate + " " + cust.ReturnDate);
+            //    Console.WriteLine("***********************************************************************");
+            //}
+            //foreach (var cust in rental.GetById(3).Data)
+            //{
+            //    Console.WriteLine(cust.CarId + " " + cust.CustomerId + " " + cust.RentDate );
+            //    Console.WriteLine("***********************************************************************");
+            //}
+
+        }
+
+        private static void CustomerAddMethod()
+        {
+            CustomerManager customer = new CustomerManager(new EfCustomerDal());
+            customer.Add(new Customer { UserId = 3, CompanyName = "Rumeysa yazılım" });
+            foreach (var cust in customer.GetCustomerDetails().Data)
+            {
+                Console.WriteLine(cust.FirstName + " " + cust.LastName + " " + cust.CompanyName);
+                Console.WriteLine("***********************************************************************");
+            }
         }
 
         private static void BrandAllMethod()
@@ -21,11 +50,11 @@ namespace ConsoleIU
             brand.Add(new Brand { BrandName = "Mercedes" });
             brand.Delete(new Brand { BrandID = 2 });
             brand.Update(new Brand { BrandID = 1, BrandName = "Dacia" });
-            foreach (var brands in brand.GetAll())
+            foreach (var brands in brand.GetAll().Data)
             {
                 Console.WriteLine(brands.BrandName);
             }
-            foreach (var brands in brand.GetById(1))
+            foreach (var brands in brand.GetById(1).Data)
             {
                 Console.WriteLine("**************************");
                 Console.WriteLine(brands.BrandName);
@@ -38,11 +67,11 @@ namespace ConsoleIU
             color.Add(new Color { ColorName = "Yellow" });
             color.Delete(new Color { ColorID = 4 });
             color.Update(new Color { ColorID = 5, ColorName = "Siyah" });
-            foreach (var colors in color.GetAll())
+            foreach (var colors in color.GetAll().Data)
             {
                 Console.WriteLine(colors.ColorName);
             }
-            foreach (var colors in color.GetById(2))
+            foreach (var colors in color.GetById(2).Data)
             {
                 Console.WriteLine(colors.ColorName);
             }
@@ -67,7 +96,7 @@ namespace ConsoleIU
             //cars.Add(new Car { CarName="Volkswagen 4TT 360",BrandId = 1, ColorId = 2, ModelYear = 2021, 
             //                    DailyPrice = 300, Description = "Deneme" 
             //                 });
-            foreach (var car in cars.GetCarDetails())
+            foreach (var car in cars.GetCarDetails().Data)
             {
                 Console.WriteLine(car.CarName + " " + car.BrandName + " " + car.ColorName + " " + car.DailyPrice);
             }
